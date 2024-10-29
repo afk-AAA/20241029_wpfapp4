@@ -3,10 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:_20241029_wpfapp4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        
+        Title="MainWindow" Height="500" Width="800">
     <Grid>
+        <DockPanel LastChildFill="False" Margin="0,0,0,0">
+            <Menu Height="30" DockPanel.Dock="Top">
+                <MenuItem Height="25" Header="檔案" VerticalAlignment="Center">
+                    <MenuItem Header="新增畫布"/>
+                    <MenuItem Header="開啟檔案"/>
+
+                </MenuItem>
+                
+            </Menu>
+            <ToolBarTray Height="40" DockPanel.Dock="Top">
+                <ToolBar Height="38" Width="400" Background="Orange">
+                    <Label Content="筆刷顏色" FontSize="14"  FontWeight="Bold"
+                    VerticalContentAlignment="Center"/>
+                    <xctk:ColorPicker x:Name="strockeColorPicker" Width="100"/>
+
+                </ToolBar>
+            </ToolBarTray>
+            <Canvas x:Name="myCanvas" Width="700" Background="Beige"
+                    DockPanel.Dock="Top" Height="353" 
+                    MouseEnter="myCanvas_MouseEnter"
+                    MouseLeftButtonDown="myCanvas_MouseLeftButtonDown"
+                    MouseMove="myCanvas_MouseMove" MouseUp="myCanvas_MouseUp"/>
+            <StatusBar Height="35" DockPanel.Dock="Bottom" 
+                       Background="LightGray"  >
+                <StatusBarItem>
+                    <Label x:Name="statusLabel" Content="Ready" FontSize="14"/>
+                </StatusBarItem>
+                <StatusBarItem>
+                    <Label x:Name="statusPoint" Content="(0, 0) - (0, 0)" FontSize="14"/>
+                </StatusBarItem>
+            </StatusBar>
+        </DockPanel>
 
     </Grid>
 </Window>
