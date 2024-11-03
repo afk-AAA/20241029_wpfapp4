@@ -39,13 +39,20 @@ namespace _20241029_wpfapp4
         private void myCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
             var brush = new SolidColorBrush(strokeColor);
-            Line line = new Line { 
+            Line line = new Line {
                 X1 = start.X,
                 Y1 = start.Y,
                 X2 = dest.X,
                 Y2 = dest.Y,
                 Stroke = brush,
+                StrokeThickness = 2,
             };
+            myCanvas.Children.Add(line);
+        }
+
+        private void strockeColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            strokeColor = strockeColorPicker.SelectedColor.Value;
         }
 
         private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

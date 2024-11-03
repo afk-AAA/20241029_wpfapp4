@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:_20241029_wpfapp4"
         mc:Ignorable="d"
         
-        Title="MainWindow" Height="500" Width="800">
+        Title="WPF小畫家ver1" Height="500" Width="800">
     <Grid>
         <DockPanel LastChildFill="False" Margin="0,0,0,0">
             <Menu Height="30" DockPanel.Dock="Top">
@@ -22,7 +22,7 @@
                 <ToolBar Height="38" Width="400" Background="Orange">
                     <Label Content="筆刷顏色" FontSize="14"  FontWeight="Bold"
                     VerticalContentAlignment="Center"/>
-                    <xctk:ColorPicker x:Name="strockeColorPicker" Width="100"/>
+                    <xctk:ColorPicker x:Name="strockeColorPicker" Width="50" SelectedColorChanged="strockeColorPicker_SelectedColorChanged"/>
 
                 </ToolBar>
             </ToolBarTray>
