@@ -17,12 +17,17 @@ namespace _20241029_wpfapp4
     public partial class MainWindow : Window
     {
         Color strokeColor = Colors.Black;
+        Color fillColor = Colors.Aqua;
         Brush strokeBrush = Brushes.Black;
+        Brush fillBrush = Brushes.Aqua;
+        string shape;
+        int strokeThickness = 1;
         Point start, dest;
         public MainWindow()
         {
             InitializeComponent();
             strockeColorPicker.SelectedColor = strokeColor;
+            fillColorPicker.SelectedColor = fillColor;
         }
 
         private void myCanvas_MouseEnter(object sender, MouseEventArgs e)
@@ -53,6 +58,38 @@ namespace _20241029_wpfapp4
         private void strockeColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             strokeColor = strockeColorPicker.SelectedColor.Value;
+        }
+
+        private void fillColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            fillColor = fillColorPicker.SelectedColor.Value;
+        }
+
+        private void Shape(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ShapeButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as RadioButton;
+            shape =button.Tag.ToString();
+            MessageBox.Show(shape);
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EraserButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void strokeThicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            strokeThickness = (int)strokeThicknessSlider.Value;
         }
 
         private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
