@@ -69,7 +69,7 @@
                     DockPanel.Dock="Top" Height="353" 
                     MouseEnter="myCanvas_MouseEnter"
                     MouseLeftButtonDown="myCanvas_MouseLeftButtonDown"
-                    MouseMove="myCanvas_MouseMove" MouseUp="myCanvas_MouseUp"/>
+                    MouseMove="myCanvas_MouseMove" MouseLeftButtonUp="myCanvas_MouseLeftButtonUp"/>
             <StatusBar Height="35" DockPanel.Dock="Bottom" 
                        Background="LightGray"  >
                 <StatusBarItem>

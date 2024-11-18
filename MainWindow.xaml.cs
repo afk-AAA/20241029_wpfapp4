@@ -1,12 +1,7 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace _20241029_wpfapp4
@@ -20,7 +15,7 @@ namespace _20241029_wpfapp4
         Color fillColor = Colors.Aqua;
         Brush strokeBrush = Brushes.Black;
         Brush fillBrush = Brushes.Aqua;
-        string shape;
+        string shapeType="line";
         int strokeThickness = 1;
         Point start, dest;
         public MainWindow()
@@ -38,23 +33,43 @@ namespace _20241029_wpfapp4
         private void myCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             dest= e.GetPosition(myCanvas);
-            statusPoint.Content = $"({Convert.ToInt32(start.X)},{Convert.ToInt32(start.Y)}) - ({Convert.ToInt32(dest.X)},{Convert.ToInt32(dest.Y)})";
-        }
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point origin;
+                origin.X = Math.Min(start.X, dest.X);
+                origin.Y = Math.Min(start.Y, dest.Y);
+                double width = Math.Abs(start.X - dest.X);
+                double height = Math.Abs(start.Y - dest.Y);
 
-        private void myCanvas_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            var brush = new SolidColorBrush(strokeColor);
-            Line line = new Line {
-                X1 = start.X,
-                Y1 = start.Y,
-                X2 = dest.X,
-                Y2 = dest.Y,
-                Stroke = brush,
-                StrokeThickness = 2,
-            };
-            myCanvas.Children.Add(line);
-        }
+                switch (shapeType)
+                {
+                    case "line":
+                        var line = myCanvas.Children.OfType<Line>().LastOrDefault();
+                        line.X2 = dest.X;
+                        line.Y2 = dest.Y;
+                        break;
+                    case "rectangle":
+                        var rectangle = myCanvas.Children.OfType<Rectangle>().LastOrDefault();
+                        rectangle.Width = width;
+                        rectangle.Height = height;
+                        rectangle.SetValue(Canvas.LeftProperty, origin.X);
+                        rectangle.SetValue(Canvas.TopProperty, origin.Y);
+                        break;
+                    case "ellipse":
+                        var ellipse = myCanvas.Children.OfType<Ellipse>().LastOrDefault();
+                        ellipse.Width = width;
+                        ellipse.Height = height;
+                        ellipse.SetValue(Canvas.LeftProperty, origin.X);
+                        ellipse.SetValue(Canvas.TopProperty, origin.Y);
+                        break;
+                    case "polyline":
+                        break;
+                }
+            }
+            statusPoint.Content = $"({Convert.ToInt32(start.X)}, {Convert.ToInt32(start.Y)}) - ({Convert.ToInt32(dest.X)}, {Convert.ToInt32(dest.Y)})";
 
+
+        }
         private void strockeColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             strokeColor = strockeColorPicker.SelectedColor.Value;
@@ -72,9 +87,9 @@ namespace _20241029_wpfapp4
 
         private void ShapeButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as RadioButton;
-            shape =button.Tag.ToString();
-            MessageBox.Show(shape);
+            var targetRadioButton = sender as RadioButton;
+            shapeType =targetRadioButton.Tag.ToString();
+            
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -92,10 +107,68 @@ namespace _20241029_wpfapp4
             strokeThickness = (int)strokeThicknessSlider.Value;
         }
 
+        private void myCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Brush storkeBrush = new SolidColorBrush(strokeColor);
+            Brush fillBrush = new SolidColorBrush(fillColor);
+
+            switch (shapeType)
+            {
+                case "line":
+                    var line = myCanvas.Children.OfType<Line>().LastOrDefault();
+                    line.Stroke = strokeBrush;
+                    line.StrokeThickness = strokeThickness;
+                    break;
+                case "rectangle":
+                    var rectangle =myCanvas.Children.OfType<Rectangle>().LastOrDefault();
+                    rectangle.Stroke = strokeBrush;
+                    rectangle.Fill = fillBrush;
+                    rectangle.StrokeThickness = strokeThickness;
+                    break;
+                case "ellipse":
+                    var ellipse = myCanvas.Children.OfType<Ellipse>().LastOrDefault();
+                    ellipse.Stroke = strokeBrush;
+                    ellipse.Fill = fillBrush;
+                    ellipse.StrokeThickness = strokeThickness;
+                    break;
+                case "polyline":
+                    break;
+            }
+        }
+
         private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             start = e.GetPosition(myCanvas);
             myCanvas.Cursor = Cursors.Cross;
+
+            switch (shapeType)
+            {
+                case "line":
+                    Line line = new Line {
+                        X1 = start.X,
+                        Y1 = start.Y,
+                        X2 = dest.X,
+                        Y2 = dest.Y,
+                        Stroke = Brushes.Gray,
+                        StrokeThickness = 1
+                    };
+                    myCanvas.Children.Add(line); 
+                    break;
+                case "rectangle":
+                    Rectangle rectangle = new Rectangle
+                    {
+                        Stroke = Brushes.Gray,
+                        Fill = Brushes.LightGray
+                    };
+                    myCanvas.Children.Add(rectangle);
+                    rectangle.SetValue(Canvas.LeftProperty, start.X);
+                    rectangle.SetValue(Canvas.TopProperty, start.Y);
+                    break;
+                case "ellipse":
+                    break;
+                case "polyline":
+                    break;
+            }
         }
     }
 }
