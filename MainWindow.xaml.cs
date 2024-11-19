@@ -171,7 +171,11 @@ namespace _20241029_wpfapp4
 
         private void DisplayStatus()
         {
+            statusAction.Content = $"{actionType}:{shapeType}";
             statusPoint.Content = $"({Convert.ToInt32(start.X)}, {Convert.ToInt32(start.Y)}) - ({Convert.ToInt32(dest.X)}, {Convert.ToInt32(dest.Y)})";
+            int lineCount = myCanvas.Children.OfType<Line>().Count();
+            int rectangleCount = myCanvas.Children.OfType<Rectangle>().Count();
+            int ellipseCount = myCanvas.Children.OfType<Ellipse>().Count();
         }
 
         private void StrockeColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
