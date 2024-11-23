@@ -35,7 +35,7 @@ namespace _20241029_wpfapp4
         }
         private void MyCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Brush storkeBrush = new SolidColorBrush(strokeColor);
+            Brush strokeBrush = new SolidColorBrush(strokeColor);
             Brush fillBrush = new SolidColorBrush(fillColor);
 
             switch (shapeType)
